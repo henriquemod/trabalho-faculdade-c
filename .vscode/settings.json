@@ -1,5 +1,10 @@
 {
-    "files.associations": {
-        "stdlib.h": "c"
-    }
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "stdlib.h": "c",
+    "address.h": "c",
+    "pet.h": "c",
+    "driver.h": "c",
+    "employee.h": "c"
+  }
 }
