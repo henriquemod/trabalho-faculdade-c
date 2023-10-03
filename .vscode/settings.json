@@ -5,6 +5,8 @@
     "address.h": "c",
     "pet.h": "c",
     "driver.h": "c",
-    "employee.h": "c"
+    "employee.h": "c",
+    "person.h": "c",
+    "service.h": "c"
   }
 }
