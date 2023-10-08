@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct Employee
 {
@@ -37,4 +38,22 @@ struct Employee *getEmployees()
     employees[1] = employee2;
 
     return employees;
+}
+
+bool authenticate(struct Employee *employees)
+{
+    char username[16];
+    char password[16];
+    printf("Username: ");
+    scanf("%[^\n]", username);
+    getchar();
+    printf("Password: ");
+    scanf("%[^\n]", password);
+    getchar();
+    struct Employee *employee = findEmployee(employees, username, password);
+    if (employee == NULL)
+    {
+        return false;
+    }
+    return true;
 }

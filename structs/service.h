@@ -8,6 +8,11 @@
 #define CLEAR_SCREEN "clear"
 #endif
 
+#define BANHO_VALUE 80.0f;
+#define TOSA_VALUE 100.0f;
+#define BANHO_TOSA_VALUE 150.0f;
+
+
 struct Service
 {
     char name[20];
@@ -48,6 +53,9 @@ struct Payment *getPayments()
 
 struct Service *getServices()
 {
+    const float BANHO = BANHO_VALUE;
+    const float TOSA = TOSA_VALUE;
+    const float BANHO_TOSA = BANHO_TOSA_VALUE;
     struct Service *services = NULL;
     services = (struct Service *)malloc(sizeof(struct Service) * 3);
     if (services == NULL)
@@ -56,9 +64,9 @@ struct Service *getServices()
         exit(1);
     }
 
-    struct Service banho = {"Banho", 100.0};
-    struct Service tosa = {"Tosa", 100.0};
-    struct Service banho_tosa = {"Banho e Tosa", 150.0};
+    struct Service banho = {"Banho", BANHO};
+    struct Service tosa = {"Tosa", TOSA};
+    struct Service banho_tosa = {"Banho e Tosa", BANHO_TOSA};
 
     services[0] = banho;
     services[1] = tosa;
@@ -74,7 +82,7 @@ char* generateRandom4DigitNumberWithPET() {
     return result;
 }
 
-void chooseService(struct Service *services, struct Driver *drivers)
+void chooseService(struct Service *services, struct Driver *drivers, int size)
 {
     struct Payment *paymentMethods = getPayments();
 
@@ -96,6 +104,7 @@ void chooseService(struct Service *services, struct Driver *drivers)
     scanf("%d", &option);
     getchar();
 
+    system(CLEAR_SCREEN);
     printf("Escolha uma forma de pagamento:\n");
     for (int i = 0; i < 2; i++)
     {
@@ -105,6 +114,7 @@ void chooseService(struct Service *services, struct Driver *drivers)
     scanf("%d", &paymentOption);
     getchar();
 
+    system(CLEAR_SCREEN);
     printf("Digite a data do serviço (dd/mm/aaaa): ");
     scanf("%d/%d/%d", &day, &month, &year);
     getchar();
@@ -118,8 +128,9 @@ void chooseService(struct Service *services, struct Driver *drivers)
 
     if (useDriver == 1)
     {
+        system(CLEAR_SCREEN);
         printf("Escolha um motorista:\n");
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < size; i++)
         {
             printf("%d - %s %s\n", i + 1, drivers[i].name, drivers[i].subName);
         }

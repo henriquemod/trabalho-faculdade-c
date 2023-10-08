@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "entities/service.h"
-#include "usecases/authenticate.c"
-#include "usecases/findCpf.c"
+#include "structs/service.h"
+#include "structs/employee.h"
+#include "structs/person.h"
 
-struct Person foundPerson;
+#define INITIAL_DRIVER_SIZE 3;
+#define INITIAL_PERSON_SIZE 1;
+
+struct Person client;
 struct Order order;
 
 int main()
@@ -14,6 +17,8 @@ int main()
     struct Person *persons = getPersons();
     struct Service *services = getServices();
     struct Driver *drivers = getDrivers();
+    int numDrivers = INITIAL_DRIVER_SIZE;
+    int numPersons = INITIAL_PERSON_SIZE;
 
     bool authorized = false;
     bool exit = false;
@@ -31,6 +36,7 @@ int main()
             system("clear");
         }
     }
+
     while (exit == false)
     {
         printf("1 - Buscar CPF\n");
@@ -43,23 +49,28 @@ int main()
         getchar();
         switch (option)
         {
-        case 1:
-            foundPerson = findCpf(persons);
-            chooseService(services, drivers);
-            break;
-        case 2:
-            // createUser();
-            break;
-        case 3:
-            createDriver();
-            break;
-        case 4:
-            exit = true;
-            break;
-        default:
-            printf("Opção inválida\n");
-            break;
+            case 1:
+                client = findCpf(persons, numPersons);
+                chooseService(services, drivers, numDrivers);
+                break;
+            case 2:
+                numPersons++;
+                persons = realloc(persons, sizeof(struct Person) * (numPersons));
+                createNewUser(persons, numPersons);
+                break;
+            case 3:
+                numDrivers++;
+                drivers = realloc(drivers, sizeof(struct Driver) * (numDrivers));
+                createDriver(drivers, numDrivers);
+                break;
+            case 4:
+                exit = true;
+                break;
+            default:
+                printf("Opção inválida\n");
+                break;
         }
     }
 
+    return 0;
 }
